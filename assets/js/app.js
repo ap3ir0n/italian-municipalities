@@ -15,7 +15,7 @@ class App extends React.Component {
         return (
             <MuiThemeProvider>
                 <div style={{display: 'flex'}}>
-                    Test
+                    Test test test
                 </div>
             </MuiThemeProvider>
         );

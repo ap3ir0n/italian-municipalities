@@ -15,7 +15,7 @@ class DefaultController extends Controller
      */
     public function homeAction()
     {
-        return new Response('Ciao mondo');
+        return $this->render('index.html.twig');
     }
 
     /**
