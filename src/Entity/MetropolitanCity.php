@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ProvinceRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\MetropolitanCityRepository")
  */
-class Province
+class MetropolitanCity
 {
     /**
      * @ORM\Id()
@@ -15,11 +15,6 @@ class Province
      * @ORM\Column(type="integer")
      */
     private $id;
-
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @var string
@@ -34,19 +29,18 @@ class Province
     private $name;
 
     /**
-     * @var boolean
-     * @ORM\Column(type="boolean")
-     */
-    private $isAbolished;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Municipality", mappedBy="province")
+     * @ORM\OneToMany(targetEntity="App\Entity\Municipality", mappedBy="metropolitanCity")
      */
     private $municipalities;
 
     public function __construct()
     {
         $this->municipalities = new ArrayCollection();
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -59,9 +53,9 @@ class Province
 
     /**
      * @param string $code
-     * @return Province
+     * @return MetropolitanCity
      */
-    public function setCode(string $code): Province
+    public function setCode(string $code): MetropolitanCity
     {
         $this->code = $code;
         return $this;
@@ -77,29 +71,11 @@ class Province
 
     /**
      * @param string $name
-     * @return Province
+     * @return MetropolitanCity
      */
-    public function setName(string $name): Province
+    public function setName(string $name): MetropolitanCity
     {
         $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAbolished(): bool
-    {
-        return $this->isAbolished;
-    }
-
-    /**
-     * @param bool $isAbolished
-     * @return Province
-     */
-    public function setIsAbolished(bool $isAbolished): Province
-    {
-        $this->isAbolished = $isAbolished;
         return $this;
     }
 
@@ -113,7 +89,7 @@ class Province
 
     /**
      * @param mixed $municipalities
-     * @return Province
+     * @return MetropolitanCity
      */
     public function setMunicipalities($municipalities)
     {

@@ -23,6 +23,12 @@ class Municipality
     private $province;
 
     /**
+     * @var Province
+     * @ORM\ManyToOne(targetEntity="App\Entity\MetropolitanCity", inversedBy="municipalities")
+     */
+    private $metropolitanCity;
+
+    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -63,6 +69,12 @@ class Municipality
      * @ORM\Column(type="bigint")
      */
     private $legalPopulationAt2011;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=2)
+     */
+    private $licensePlateCode;
 
     public function getId()
     {
@@ -212,5 +224,24 @@ class Municipality
         $this->legalPopulationAt2011 = $legalPopulationAt2011;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    public function getLicensePlateCode(): string
+    {
+        return $this->licensePlateCode;
+    }
+
+    /**
+     * @param string $licensePlateCode
+     * @return Municipality
+     */
+    public function setLicensePlateCode(string $licensePlateCode): Municipality
+    {
+        $this->licensePlateCode = $licensePlateCode;
+        return $this;
+    }
+
 
 }
