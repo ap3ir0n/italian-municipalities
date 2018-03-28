@@ -243,5 +243,4 @@ class Municipality
         return $this;
     }
 
-
 }
