@@ -42,7 +42,7 @@ class Municipality
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $nameInOtherLanguage;
 
@@ -66,7 +66,7 @@ class Municipality
 
     /**
      * @var integer
-     * @ORM\Column(type="bigint")
+     * @ORM\Column(type="bigint", nullable=true)
      */
     private $legalPopulationAt2011;
 
@@ -240,6 +240,24 @@ class Municipality
     public function setLicensePlateCode(string $licensePlateCode): Municipality
     {
         $this->licensePlateCode = $licensePlateCode;
+        return $this;
+    }
+
+    /**
+     * @return Province
+     */
+    public function getMetropolitanCity(): Province
+    {
+        return $this->metropolitanCity;
+    }
+
+    /**
+     * @param Province $metropolitanCity
+     * @return Municipality
+     */
+    public function setMetropolitanCity(Province $metropolitanCity): Municipality
+    {
+        $this->metropolitanCity = $metropolitanCity;
         return $this;
     }
 

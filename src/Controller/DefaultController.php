@@ -18,14 +18,4 @@ class DefaultController extends Controller
         return $this->render('index.html.twig');
     }
 
-    /**
-     * @Route("/data")
-     */
-    public function dataAction()
-    {
-        return new JsonResponse([
-            'test' => 'Ciao mondo'
-        ]);
-    }
-
 }

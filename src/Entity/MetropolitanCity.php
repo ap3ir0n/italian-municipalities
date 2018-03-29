@@ -17,7 +17,7 @@ class MetropolitanCity
     private $id;
 
     /**
-     * @var string
+     * @var int
      * @ORM\Column(type="integer")
      */
     private $code;
@@ -33,10 +33,17 @@ class MetropolitanCity
      */
     private $municipalities;
 
-    public function __construct()
+    /**
+     * MetropolitanCity constructor.
+     * @param int $code
+     * @param string $name
+     */
+    public function __construct(string $name, int $code)
     {
-        $this->municipalities = new ArrayCollection();
+        $this->setCode($code);
+        $this->name = $name;
     }
+
 
     public function getId()
     {
@@ -44,19 +51,23 @@ class MetropolitanCity
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getCode(): string
+    public function getCode(): int
     {
         return $this->code;
     }
 
     /**
-     * @param string $code
+     * @param int $code
      * @return MetropolitanCity
      */
-    public function setCode(string $code): MetropolitanCity
+    public function setCode(int $code): MetropolitanCity
     {
+        if ($code < 1 || $code > 999) {
+            throw new InvalidCodeException('The code must be between 1 an 999');
+        }
+
         $this->code = $code;
         return $this;
     }

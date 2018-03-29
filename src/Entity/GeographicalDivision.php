@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -61,16 +62,6 @@ class GeographicalDivision
     public function getMunicipalities()
     {
         return $this->municipalities;
-    }
-
-    /**
-     * @param mixed $municipalities
-     * @return GeographicalDivision
-     */
-    public function setMunicipalities($municipalities)
-    {
-        $this->municipalities = $municipalities;
-        return $this;
     }
 
 }

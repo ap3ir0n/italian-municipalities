@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use App\Exceptions\InvalidCodeException;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,13 +18,8 @@ class Province
      */
     private $id;
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     /**
-     * @var string
+     * @var integer
      * @ORM\Column(type="integer")
      */
     private $code;
@@ -44,25 +41,46 @@ class Province
      */
     private $municipalities;
 
-    public function __construct()
+    /**
+     * Province constructor.
+     * @param int $code
+     * @param string $name
+     * @param bool $isAbolished
+     *
+     * @throws InvalidCodeException
+     */
+    public function __construct(string $name, int $code, bool $isAbolished = false)
     {
+        $this->setCode($code);
+        $this->name = $name;
+        $this->isAbolished = $isAbolished;
         $this->municipalities = new ArrayCollection();
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
-     * @return string
+     * @return int
      */
-    public function getCode(): string
+    public function getCode(): int
     {
         return $this->code;
     }
 
     /**
-     * @param string $code
+     * @param int $code
      * @return Province
+     * @throws InvalidCodeException
      */
-    public function setCode(string $code): Province
+    public function setCode(int $code): Province
     {
+        if ($code < 1 || $code > 999) {
+            throw new InvalidCodeException('The code must be between 1 an 999');
+        }
+
         $this->code = $code;
         return $this;
     }
@@ -109,16 +127,6 @@ class Province
     public function getMunicipalities()
     {
         return $this->municipalities;
-    }
-
-    /**
-     * @param mixed $municipalities
-     * @return Province
-     */
-    public function setMunicipalities($municipalities)
-    {
-        $this->municipalities = $municipalities;
-        return $this;
     }
 
 }
