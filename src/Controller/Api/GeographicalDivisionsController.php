@@ -7,8 +7,11 @@
 namespace App\Controller\Api;
 
 
+use App\Api\ApiProblem;
+use App\Api\ApiProblemException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GeographicalDivisionsController extends Controller
@@ -24,6 +27,13 @@ class GeographicalDivisionsController extends Controller
     {
         $data = $this->getDoctrine()->getRepository('App:GeographicalDivision')
             ->find($geographicalDivisionId);
+
+        if (empty($data)) {
+            $apiProblem = new ApiProblem(
+                Response::HTTP_BAD_REQUEST,
+                ApiProblem::TYPE_ENTITY_NOT_FOUND);
+            throw new ApiProblemException($apiProblem);
+        }
 
         $jsonData = $this->get('jms_serializer')->serialize($data, 'json');
 

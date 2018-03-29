@@ -90,4 +90,23 @@ class GeographicalDivisionsControllerFunctionalTest extends WebTestCase
         $this->assertObjectNotHasAttribute('municipalities', $geographicalDivision);
     }
 
+    public function testGetActionWithAnInvalidId()
+    {
+        $crawler = $this->client->request('GET',
+            "/api/geographical-divisions/0");
+
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertEquals('application/problem+json', $response->headers->get('Content-Type'));
+        $this->assertJson($response->getContent());
+
+        $decodedJson = json_decode($response->getContent());
+
+        $geographicalDivision = $decodedJson;
+        $this->assertObjectHasAttribute('id', $geographicalDivision);
+        $this->assertObjectHasAttribute('name', $geographicalDivision);
+        $this->assertObjectNotHasAttribute('municipalities', $geographicalDivision);
+    }
+
 }
