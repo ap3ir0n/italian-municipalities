@@ -5,6 +5,7 @@
  */
 
 namespace App\Api;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class ApiProblem
@@ -13,10 +14,9 @@ namespace App\Api;
  */
 class ApiProblem
 {
-    const TYPE_ENTITY_NOT_FOUND = 'entity_not_found';
 
     private static $titles = array(
-        self::TYPE_ENTITY_NOT_FOUND => 'Entity not found'
+
     );
 
     /**
@@ -44,16 +44,25 @@ class ApiProblem
      * @param int $statusCode
      * @param string $type
      */
-    public function __construct(int $statusCode, string $type)
+    public function __construct(int $statusCode, string $type = null)
     {
         $this->statusCode = $statusCode;
-        $this->type = $type;
 
-        if (!isset(self::$titles[$type])) {
-            throw new \InvalidArgumentException('No title for type '.$type);
+        if ($type === null) {
+            $type = 'about:blank';
+            $title = isset(Response::$statusTexts[$statusCode])
+                ? Response::$statusTexts[$statusCode]
+                : 'Unknown status code :(';
+        } else {
+            if (!isset(self::$titles[$type])) {
+                throw new \InvalidArgumentException('No title for type ' . $type);
+            }
+
+            $title = self::$titles[$type];
         }
 
-        $this->title = self::$titles[$type];
+        $this->type = $type;
+        $this->title = $title;
     }
 
     /**

@@ -22,4 +22,13 @@ class ApiProblemException extends HttpException
 
         parent::__construct($apiProblem->getStatusCode(), $apiProblem->getTitle(), $previous, $headers, $code);
     }
+
+    /**
+     * @return ApiProblem
+     */
+    public function getApiProblem(): ApiProblem
+    {
+        return $this->apiProblem;
+    }
+
 }

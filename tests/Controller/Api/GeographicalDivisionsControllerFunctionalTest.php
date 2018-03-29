@@ -93,20 +93,22 @@ class GeographicalDivisionsControllerFunctionalTest extends WebTestCase
     public function testGetActionWithAnInvalidId()
     {
         $crawler = $this->client->request('GET',
-            "/api/geographical-divisions/0");
+            "/api/geographical-divisions/fake");
 
         $response = $this->client->getResponse();
 
-        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_NOT_FOUND, $response->getStatusCode());
         $this->assertEquals('application/problem+json', $response->headers->get('Content-Type'));
         $this->assertJson($response->getContent());
 
         $decodedJson = json_decode($response->getContent());
 
-        $geographicalDivision = $decodedJson;
-        $this->assertObjectHasAttribute('id', $geographicalDivision);
-        $this->assertObjectHasAttribute('name', $geographicalDivision);
-        $this->assertObjectNotHasAttribute('municipalities', $geographicalDivision);
+        $responseObject = $decodedJson;
+        $this->assertObjectHasAttribute('status', $responseObject);
+        $this->assertObjectHasAttribute('type', $responseObject);
+        $this->assertObjectHasAttribute('title', $responseObject);
+        $this->assertEquals('about:blank', $responseObject->type);
+        $this->assertEquals('Not Found', $responseObject->title);
     }
 
 }
