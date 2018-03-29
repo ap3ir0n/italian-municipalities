@@ -1,0 +1,3 @@
+doctrine:
+    dbal:
+        url: mysql://devel:devel@127.0.0.1:3306/italian_municipalities_test

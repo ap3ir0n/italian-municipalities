@@ -1,5 +1,6 @@
 doctrine:
     orm:
+        # TODO: Fix cache generation in order to set false
         auto_generate_proxy_classes: 'FILE_NOT_EXISTS'
         metadata_cache_driver:
             type: service
