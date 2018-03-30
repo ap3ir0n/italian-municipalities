@@ -30,19 +30,10 @@ class GeographicalDivisionsController extends FOSRestController
      *     name="api_geographical_divisions_get"
      * )
      */
-    public function getAction($id)
+    public function getAction(Request $request)
     {
-        $gd = $this->getDoctrine()->getRepository('App:GeographicalDivision')
-            ->find($id);
-
-        if (!$gd) {
-            throw $this->createNotFoundException(sprintf(
-                'No geographical division found with id "%s"',
-                $id
-            ));
-        }
-
-        return $gd;
+        return $this->get('App\Api\GetActionHandler')
+            ->handleRequest($request, 'App:GeographicalDivision');
     }
 
     /**
@@ -57,26 +48,11 @@ class GeographicalDivisionsController extends FOSRestController
         $page = $request->query->get('page', 1);
         $limit = $request->query->get('limit', 25);
 
-        $qb = $this->getDoctrine()
+        $query = $this->getDoctrine()
             ->getRepository('App:GeographicalDivision')
             ->createQueryBuilder('gd');
-        $pagerfanta = new Pagerfanta(new DoctrineORMAdapter($qb));
-        $pagerfanta
-            ->setCurrentPage($page)
-            ->setMaxPerPage($limit);
 
-        $factory = new PagerfantaFactory('page', 'limit');
-        $representation = $factory->createRepresentation(
-            $pagerfanta, new \Hateoas\Configuration\Route('api_geographical_divisions_list')
-        );
-
-        return $representation;
-
-//        $data = $this->getDoctrine()->getRepository('App:GeographicalDivision')->findAll();
-//
-//        $jsonData = $this->get('jms_serializer')->serialize($data, 'json');
-//
-//        return new JsonResponse($jsonData, JsonResponse::HTTP_OK, [], true);
+        return $this->get('App\Api\ListActionHandler')->handleRequest($query, $page, $limit);
     }
 
 

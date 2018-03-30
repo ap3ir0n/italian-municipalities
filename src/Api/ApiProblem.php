@@ -14,9 +14,10 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class ApiProblem
 {
+    public const TYPE_NO_ID_SUPPLIED = 'no-id-supplied';
 
     private static $titles = array(
-
+        self::TYPE_NO_ID_SUPPLIED => 'No id supplied'
     );
 
     /**
