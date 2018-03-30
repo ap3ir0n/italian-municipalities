@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class GetActionHandler
+class GetActionRepresentationMaker
 {
     /**
      * @var ManagerRegistry
@@ -28,7 +28,7 @@ class GetActionHandler
         $this->managerRegistry = $managerRegistry;
     }
 
-    public function handleRequest(Request $request, $persistentObject, $idAttribute = 'id')
+    public function make(Request $request, $persistentObject, $idAttribute = 'id')
     {
         $id = $request->attributes->get($idAttribute);
 

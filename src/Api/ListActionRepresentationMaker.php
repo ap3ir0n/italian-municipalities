@@ -12,13 +12,13 @@ use Hateoas\Representation\Factory\PagerfantaFactory;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
 
-class ListActionHandler
+class ListActionRepresentationMaker
 {
     /**
      * @param \Doctrine\ORM\Query|\Doctrine\ORM\QueryBuilder $query               A Doctrine ORM query or query builder.
      * @return mixed
      */
-    public function handleRequest($query, $page = 1, $limit = 25)
+    public function make($query, $page = 1, $limit = 25)
     {
         $pagerfanta = new Pagerfanta(new DoctrineORMAdapter($query));
         $pagerfanta

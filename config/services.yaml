@@ -32,9 +32,9 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-    App\Api\GetActionHandler:
+    App\Api\GetActionRepresentationMaker:
         arguments: ['@doctrine']
         public: true
 
-    App\Api\ListActionHandler:
+    App\Api\ListActionRepresentationMaker:
         public: true
