@@ -59,9 +59,9 @@ class GeographicalDivisionsControllerFunctionalTest extends WebTestCase
 
         $decodedJson = json_decode($response->getContent());
         $dbCount = $this->em->getRepository('App:GeographicalDivision')->count([]);
-        $this->assertEquals($dbCount, count($decodedJson));
+        $this->assertEquals($dbCount, count($decodedJson->_embedded->items));
 
-        $geographicalDivision = $decodedJson[0];
+        $geographicalDivision = $decodedJson->_embedded->items[0];
         $this->assertObjectHasAttribute('id', $geographicalDivision);
         $this->assertObjectHasAttribute('name', $geographicalDivision);
         $this->assertObjectNotHasAttribute('municipalities', $geographicalDivision);
