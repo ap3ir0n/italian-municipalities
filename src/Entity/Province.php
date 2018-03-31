@@ -5,9 +5,18 @@ namespace App\Entity;
 use App\Exceptions\InvalidCodeException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProvinceRepository")
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "api_provinces_get",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      )
+ * )
  */
 class Province
 {
@@ -38,6 +47,7 @@ class Province
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Municipality", mappedBy="province")
+     * @Serializer\Exclude()
      */
     private $municipalities;
 

@@ -13,29 +13,29 @@ use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GeographicalDivisionsController extends FOSRestController
+class MetropolitaCitiesController extends FOSRestController
 {
     use ListControllerTrait;
 
     /**
      * @Route(
-     *     path="/api/geographical-divisions/{id}",
+     *     path="/api/metropolitan-cities/{id}",
      *     methods={"GET"},
-     *     name="api_geographical_divisions_get"
+     *     name="api_metropolitan_cities_get"
      * )
      */
     public function getAction(Request $request)
     {
         $data = $this->get('App\Api\GetActionRepresentationMaker')
-            ->make($request, 'App:GeographicalDivision');
+            ->make($request, 'App:MetropolitanCity');
         return View::create($data);
     }
 
     /**
      * @Route(
-     *     path="/api/geographical-divisions",
+     *     path="/api/metropolitan-cities",
      *     methods={"GET"},
-     *     name="api_geographical_divisions_list"
+     *     name="api_metropolitan_cities_list"
      * )
      */
     public function listAction(Request $request)
@@ -43,8 +43,8 @@ class GeographicalDivisionsController extends FOSRestController
         $page = $this->getPage($request);
         $limit = $this->getLimit($request);
         $queryBuilder = $this->getDoctrine()
-            ->getRepository('App:GeographicalDivision')
-            ->createQueryBuilder('gd');
+            ->getRepository('App:MetropolitanCity')
+            ->createQueryBuilder('p');
 
         $data = $this->get('App\Api\ListActionRepresentationMaker')
             ->make($queryBuilder, $page, $limit);

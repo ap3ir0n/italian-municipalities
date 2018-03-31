@@ -3,9 +3,18 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
+use Hateoas\Configuration\Annotation as Hateoas;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MetropolitanCityRepository")
+ * @Hateoas\Relation(
+ *      "self",
+ *      href = @Hateoas\Route(
+ *          "api_metropolitan_cities_get",
+ *          parameters = { "id" = "expr(object.getId())" }
+ *      )
+ * )
  */
 class MetropolitanCity
 {
@@ -30,6 +39,7 @@ class MetropolitanCity
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Municipality", mappedBy="metropolitanCity")
+     * @Serializer\Exclude()
      */
     private $municipalities;
 
