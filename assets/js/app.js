@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import MinicipalitiesIndex from './components/MunicipalitiesIndex';
+import MunicipalitiesIndex from './components/MunicipalitiesIndex';
+import MunicipalityShow from './components/MunicipalityShow';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -19,7 +20,8 @@ class App extends React.Component {
                     <div style={{display: 'flex'}}>
                         <BrowserRouter>
                             <Switch>
-                                <Route path="/" component={MinicipalitiesIndex}/>
+                                <Route path="/municipalities/:id" component={MunicipalityShow}/>
+                                <Route path="/" component={MunicipalitiesIndex}/>
                             </Switch>
                         </BrowserRouter>
                     </div>

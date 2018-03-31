@@ -20,6 +20,12 @@ Encore
 
     // uncomment for legacy applications that require $/jQuery as a global variable
     // .autoProvidejQuery()
+
+    .configureBabel(function(babelConfig) {
+        babelConfig.presets.push('es2017');
+        babelConfig.presets.push('es2015');
+        babelConfig.presets.push('stage-1');
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();
