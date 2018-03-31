@@ -60,8 +60,12 @@ class MunicipalitiesControllerFunctionalTest extends WebTestCase
         $this->assertEquals($dbCount, count($decodedJson->_embedded->items));
 
         $municipality = $decodedJson->_embedded->items[0];
-        $this->assertObjectHasAttribute('id', $municipality);
-        $this->assertObjectHasAttribute('name', $municipality);
+        $attributes = ['id', 'province', 'number', 'name',
+            'geographicalDivision', 'isProvincialCapital',
+            'cadastralCode', 'licensePlateCode'];
+        foreach ($attributes as $attribute) {
+            $this->assertObjectHasAttribute($attribute, $municipality);
+        }
         $this->assertObjectNotHasAttribute('municipalities', $municipality);
     }
 

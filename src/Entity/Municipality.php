@@ -25,6 +25,12 @@ class Municipality
     private $id;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
+
+    /**
      * @var Province
      * @ORM\ManyToOne(targetEntity="App\Entity\Province", inversedBy="municipalities")
      */
@@ -41,12 +47,6 @@ class Municipality
      * @ORM\Column(type="integer")
      */
     private $number;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
 
     /**
      * @var string

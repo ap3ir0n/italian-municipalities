@@ -86,7 +86,7 @@ class ProvincesControllerFunctionalTest extends WebTestCase
         $this->assertObjectHasAttribute('id', $province);
         $this->assertObjectHasAttribute('name', $province);
         $this->assertObjectHasAttribute('_links', $province);
-        $this->assertObjectHasAttribute('is_abolished', $province);
+        $this->assertObjectHasAttribute('isAbolished', $province);
         $this->assertObjectNotHasAttribute('municipalities', $province);
     }
 
