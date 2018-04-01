@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Hateoas\Configuration\Annotation as Hateoas;
+use JMS\Serializer\Annotation as Serializer;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MunicipalityRepository")
@@ -27,12 +29,14 @@ class Municipality
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
      * @var Province
      * @ORM\ManyToOne(targetEntity="App\Entity\Province", inversedBy="municipalities")
+     * @Assert\NotBlank()
      */
     private $province;
 
@@ -45,6 +49,7 @@ class Municipality
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
      */
     private $number;
 
@@ -57,6 +62,7 @@ class Municipality
     /**
      * @var GeographicalDivision
      * @ORM\ManyToOne(targetEntity="App\Entity\GeographicalDivision", inversedBy="municipalities")
+     * @Assert\NotBlank()
      */
     private $geographicalDivision;
 
@@ -64,11 +70,12 @@ class Municipality
      * @var boolean
      * @ORM\Column(type="boolean")
      */
-    private $isProvincialCapital;
+    private $isProvincialCapital = false;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=4)
+     * @Assert\NotBlank()
      */
     private $cadastralCode;
 
@@ -81,6 +88,7 @@ class Municipality
     /**
      * @var string
      * @ORM\Column(type="string", length=2)
+     * @Assert\NotBlank()
      */
     private $licensePlateCode;
 
@@ -92,7 +100,7 @@ class Municipality
     /**
      * @return Province
      */
-    public function getProvince(): Province
+    public function getProvince(): ?Province
     {
         return $this->province;
     }
@@ -110,7 +118,7 @@ class Municipality
     /**
      * @return int
      */
-    public function getNumber(): int
+    public function getNumber(): ?int
     {
         return $this->number;
     }
@@ -128,7 +136,7 @@ class Municipality
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -137,7 +145,7 @@ class Municipality
      * @param string $name
      * @return Municipality
      */
-    public function setName(string $name): Municipality
+    public function setName(string $name): ?Municipality
     {
         $this->name = $name;
         return $this;
@@ -146,7 +154,7 @@ class Municipality
     /**
      * @return string
      */
-    public function getNameInOtherLanguage(): string
+    public function getNameInOtherLanguage(): ?string
     {
         return $this->nameInOtherLanguage;
     }
@@ -164,7 +172,7 @@ class Municipality
     /**
      * @return GeographicalDivision
      */
-    public function getGeographicalDivision(): GeographicalDivision
+    public function getGeographicalDivision(): ?GeographicalDivision
     {
         return $this->geographicalDivision;
     }
@@ -200,7 +208,7 @@ class Municipality
     /**
      * @return string
      */
-    public function getCadastralCode(): string
+    public function getCadastralCode(): ?string
     {
         return $this->cadastralCode;
     }
@@ -218,7 +226,7 @@ class Municipality
     /**
      * @return int
      */
-    public function getLegalPopulationAt2011(): int
+    public function getLegalPopulationAt2011(): ?int
     {
         return $this->legalPopulationAt2011;
     }
@@ -236,7 +244,7 @@ class Municipality
     /**
      * @return string
      */
-    public function getLicensePlateCode(): string
+    public function getLicensePlateCode(): ?string
     {
         return $this->licensePlateCode;
     }
@@ -254,7 +262,7 @@ class Municipality
     /**
      * @return Province
      */
-    public function getMetropolitanCity(): Province
+    public function getMetropolitanCity(): ?Province
     {
         return $this->metropolitanCity;
     }

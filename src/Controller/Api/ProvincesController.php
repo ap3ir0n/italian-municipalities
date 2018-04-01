@@ -11,6 +11,7 @@ use App\Api\ListControllerTrait;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProvincesController extends FOSRestController
@@ -28,7 +29,7 @@ class ProvincesController extends FOSRestController
     {
         $data = $this->get('App\Api\GetActionRepresentationMaker')
             ->make($request, 'App:Province');
-        return View::create($data);
+        return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
     /**
@@ -48,7 +49,7 @@ class ProvincesController extends FOSRestController
 
         $data = $this->get('App\Api\ListActionRepresentationMaker')
             ->make($queryBuilder, $page, $limit);
-        return View::create($data);
+        return $this->handleView($this->view($data, Response::HTTP_OK));
     }
 
 
