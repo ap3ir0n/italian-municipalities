@@ -198,23 +198,29 @@ class MunicipalitiesControllerFunctionalTest extends WebTestCase
         $this->assertObjectNotHasAttribute('municipalities', $errorResponse);
     }
 
-    public function testPutActionWithValidData()
+    public function testPutAction()
     {
         $caltanissetta = $this->em->getRepository('App:Province')->findOneByName('Caltanissetta');
         $enna = $this->em->getRepository('App:Province')->findOneByName('Enna');
         $isole = $this->em->getRepository('App:GeographicalDivision')->findOneByName('Isole');
         $centro = $this->em->getRepository('App:GeographicalDivision')->findOneByName('Centro');
 
-        $calascibetta = new Municipality();
-        $calascibetta
-            ->setName('Fake name')
-            ->setNumber(90)
-            ->setIsProvincialCapital(true)
-            ->setCadastralCode('ASDF')
-            ->setLegalPopulationAt2011(999999)
-            ->setLicensePlateCode('XX')
-            ->setProvince($caltanissetta)
-            ->setGeographicalDivision($centro);
+        $fakeData = [
+            'name' => 'Fake',
+            'number' => 99,
+            'isProvincialCapital' => true,
+            'cadastralCode' => 'XXXX',
+            'legalPopulationAt2011' => 999999,
+            'licensePlateCode' => 'XX',
+            'province' => $caltanissetta->getId(),
+            'geographicalDivision' => $centro->getId(),
+        ];
+
+        $crawler = $this->client->request(Request::METHOD_POST,"/api/municipalities", [], [],
+            ['CONTENT_TYPE' => 'application/json'], json_encode($fakeData));
+
+        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $decodedJson = json_decode($this->client->getResponse()->getContent());
 
         $data = [
             'name' => 'Calascibetta',
@@ -225,15 +231,15 @@ class MunicipalitiesControllerFunctionalTest extends WebTestCase
             'licensePlateCode' => 'EN',
             'province' => $enna->getId(),
             'geographicalDivision' => $isole->getId(),
-            'isProvincialCapital' => false
         ];
 
-        $crawler = $this->client->request(Request::METHOD_PUT,"/api/municipalities", [], [],
+        $crawler = $this->client->request(Request::METHOD_PUT,"/api/municipalities/{$decodedJson->id}", [], [],
             ['CONTENT_TYPE' => 'application/json'], json_encode($data));
 
         $response = $this->client->getResponse();
+        print_r($response->getContent());
 
-        $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('Content-Type'));
         $this->assertJson($response->getContent());
 
@@ -259,6 +265,57 @@ class MunicipalitiesControllerFunctionalTest extends WebTestCase
         $this->assertEquals($data['geographicalDivision'], $municipality->geographicalDivision->id);
 
         $this->assertObjectNotHasAttribute('municipalities', $municipality);
+    }
+
+    public function testPatchAction()
+    {
+        $caltanissetta = $this->em->getRepository('App:Province')->findOneByName('Caltanissetta');
+        $enna = $this->em->getRepository('App:Province')->findOneByName('Enna');
+        $isole = $this->em->getRepository('App:GeographicalDivision')->findOneByName('Isole');
+        $centro = $this->em->getRepository('App:GeographicalDivision')->findOneByName('Centro');
+
+        $fakeData = [
+            'name' => 'Fake',
+            'number' => 5,
+            'isProvincialCapital' => false,
+            'cadastralCode' => 'B381',
+            'legalPopulationAt2011' => 4628,
+            'licensePlateCode' => 'EN',
+            'province' => $enna->getId(),
+            'geographicalDivision' => $isole->getId(),
+        ];
+
+        $crawler = $this->client->request(Request::METHOD_POST,"/api/municipalities", [], [],
+            ['CONTENT_TYPE' => 'application/json'], json_encode($fakeData));
+
+        $this->assertEquals(Response::HTTP_CREATED, $this->client->getResponse()->getStatusCode());
+        $decodedJson = json_decode($this->client->getResponse()->getContent());
+
+        $data = [
+            'name' => 'Calascibetta',
+        ];
+
+        $crawler = $this->client->request(Request::METHOD_PATCH,"/api/municipalities/{$decodedJson->id}", [], [],
+            ['CONTENT_TYPE' => 'application/json'], json_encode($data));
+
+        $response = $this->client->getResponse();
+
+        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertEquals('application/json', $response->headers->get('Content-Type'));
+        $this->assertJson($response->getContent());
+
+        $decodedJson = json_decode($response->getContent());
+
+        $municipality = $decodedJson;
+        $this->assertObjectHasAttribute('id', $municipality);
+
+        $scalars = [
+            'name'
+        ];
+        foreach ($scalars as $name) {
+            $this->assertObjectHasAttribute($name, $municipality);
+            $this->assertAttributeEquals($data[$name], $name, $municipality);
+        }
     }
 
 }

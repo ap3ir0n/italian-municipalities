@@ -74,7 +74,7 @@ class MunicipalitiesController extends FOSRestController
 
     /**
      * @Route(
-     *     path="/api/municipalities",
+     *     path="/api/municipalities/{id}",
      *     methods={"PUT"},
      *     name="api_municipalities_put"
      * )
@@ -85,7 +85,7 @@ class MunicipalitiesController extends FOSRestController
 
     /**
      * @Route(
-     *     path="/api/municipalities",
+     *     path="/api/municipalities/{id}",
      *     methods={"PATCH"},
      *     name="api_municipalities_patch"
      * )
