@@ -7,7 +7,7 @@
 namespace App\Istat;
 
 
-class IstatMunicipalityCsvReader implements IStatMunicipalityReader
+class IstatMunicipalityCsvReader implements IstatMunicipalityReader
 {
 
     public function read(): array

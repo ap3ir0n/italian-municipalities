@@ -7,6 +7,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import promise from 'redux-promise';
+import AppBar from 'material-ui/AppBar';
 
 import reducers from './reducers';
 
@@ -17,7 +18,12 @@ class App extends React.Component {
         return (
             <Provider store={createStoreWithMiddleware(reducers)}>
                 <MuiThemeProvider>
-                    <div style={{display: 'flex'}}>
+                    <div>
+                        <AppBar
+                            title="Italian Municipalities"
+                            showMenuIconButton={false}
+                            iconClassNameRight="muidocs-icon-navigation-expand-more"
+                        />
                         <BrowserRouter>
                             <Switch>
                                 <Route path="/municipalities/:id" component={MunicipalityShow}/>

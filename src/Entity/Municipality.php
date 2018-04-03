@@ -277,4 +277,17 @@ class Municipality
         return $this;
     }
 
+    /**
+     * @Serializer\VirtualProperty(
+     *     options={@Serializer\SerializedName("istatCode")}
+     * )
+     * @return null|string
+     */
+    public function getIstatCode(): ?string
+    {
+        $code = str_pad($this->province->getCode(), 3, '0', STR_PAD_LEFT) .
+            str_pad($this->getNumber(), 3, '0',STR_PAD_LEFT);
+        return $code;
+    }
+
 }

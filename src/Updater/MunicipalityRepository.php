@@ -9,7 +9,7 @@ namespace App\Updater;
 
 use App\Entity\Municipality;
 
-interface MunicipalityReader
+interface MunicipalityRepository
 {
     public function findAll(): array;
 

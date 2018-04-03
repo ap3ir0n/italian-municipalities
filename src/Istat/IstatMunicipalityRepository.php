@@ -8,19 +8,20 @@ namespace App\Istat;
 
 
 use App\Entity\Municipality;
+use App\Updater\MunicipalityRepository;
 
-class MunicipalityRepository
+class IstatMunicipalityRepository implements MunicipalityRepository
 {
     /**
-     * @var MunicipalityReader
+     * @var IStatMunicipalityReader
      */
     private $reader;
 
     /**
      * MunicipalityRepository constructor.
-     * @param MunicipalityReader $reader
+     * @param IStatMunicipalityReader $reader
      */
-    public function __construct(MunicipalityReader $reader)
+    public function __construct(IStatMunicipalityReader $reader)
     {
         $this->reader = $reader;
     }

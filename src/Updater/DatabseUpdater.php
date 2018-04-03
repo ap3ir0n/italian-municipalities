@@ -9,5 +9,23 @@ namespace App\Updater;
 
 class DatabseUpdater
 {
+    /**
+     * @var MunicipalityRepository
+     */
+    private $repository;
 
+    /**
+     * DatabseUpdater constructor.
+     * @param MunicipalityRepository $repository
+     */
+    public function __construct(MunicipalityRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+
+    public function update()
+    {
+        // TODO: Implement update() method
+    }
 }

@@ -5,8 +5,11 @@ const ROOT_URL = '/api/';
 export const FETCH_MUNICIPALITIES = 'FETCH_MUNICIPALITIES';
 export const FETCH_MUNICIPALITY = 'FETCH_MUNICIPALITY';
 
-export function fetchMunicipalities(page = 1, limit = 25) {
-    const request = axios.get(`${ROOT_URL}municipalities?page=${page}&limit=${limit}`);
+export function fetchMunicipalities(url = null) {
+    if (!url) {
+        url = `${ROOT_URL}municipalities`;
+    }
+    const request = axios.get(url);
 
     return {
         type: FETCH_MUNICIPALITIES,

@@ -30,8 +30,29 @@ class MunicipalityFixtures extends Fixture implements DependentFixtureInterface
             ->setIsProvincialCapital(false)
             ->setLicensePlateCode('EN')
             ->setCadastralCode('G580');
-
         $manager->persist($piazzaArmerina);
+
+        $barrafranca = new Municipality();
+        $barrafranca
+            ->setName('Barrafranca')
+            ->setProvince($this->getReference(ProvinceFixtures::ENNA))
+            ->setNumber(4)
+            ->setGeographicalDivision($this->getReference(GeographicalDivisionFixtures::GEOGRAPHICAL_DIVISIONS['ISOLE']))
+            ->setIsProvincialCapital(false)
+            ->setLicensePlateCode('EN')
+            ->setCadastralCode('A676');
+        $manager->persist($barrafranca);
+
+        $aidone = new Municipality();
+        $aidone
+            ->setName('Aidone')
+            ->setProvince($this->getReference(ProvinceFixtures::ENNA))
+            ->setNumber(2)
+            ->setGeographicalDivision($this->getReference(GeographicalDivisionFixtures::GEOGRAPHICAL_DIVISIONS['ISOLE']))
+            ->setIsProvincialCapital(false)
+            ->setLicensePlateCode('EN')
+            ->setCadastralCode('A098');
+        $manager->persist($aidone);
 
         $manager->flush();
     }
