@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import MunicipalitiesIndex from './components/MunicipalitiesIndex';
 import MunicipalityShow from './components/MunicipalityShow';
+import MunicipalityEdit from './components/MunicipalityEdit';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -26,6 +27,7 @@ class App extends React.Component {
                         />
                         <BrowserRouter>
                             <Switch>
+                                <Route path="/municipalities/:id/edit" component={MunicipalityEdit}/>
                                 <Route path="/municipalities/:id" component={MunicipalityShow}/>
                                 <Route path="/" component={MunicipalitiesIndex}/>
                             </Switch>

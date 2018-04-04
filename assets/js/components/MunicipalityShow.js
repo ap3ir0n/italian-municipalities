@@ -42,7 +42,7 @@ class MunicipalityShow extends Component {
                     </CardText>
                     <CardActions>
                         <FlatButton label="Back to List" containerElement={<Link to="/"/>}/>
-                        <FlatButton label="Edit" containerElement={<Link to="/"/>}/>
+                        <FlatButton label="Edit" containerElement={<Link to={`/municipalities/${municipality.id}/edit`}/>}/>
                         <FlatButton label="Delete" containerElement={<Link to="/"/>}/>
                     </CardActions>
                 </Card>

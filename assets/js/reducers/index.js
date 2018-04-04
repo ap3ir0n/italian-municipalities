@@ -1,8 +1,14 @@
 import { combineReducers } from 'redux';
-import MunicipalitiesReducer from './municipalities';
+import municipalitiesReducer from './municipalities';
+import provincesReducer from './provinces';
+import geographicalDivisionsReducer from './geographicalDivisions';
+import { reducer as reduxFormReducer } from 'redux-form';
 
 const rootReducer = combineReducers({
-    municipalities: MunicipalitiesReducer
+    municipalities: municipalitiesReducer,
+    provinces: provincesReducer,
+    geographicalDivisions: geographicalDivisionsReducer,
+    form: reduxFormReducer
 });
 
 export default rootReducer;
