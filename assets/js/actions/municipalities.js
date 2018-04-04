@@ -29,17 +29,13 @@ export function fetchMunicipality(id) {
 }
 
 export function editMunicipality(id, values, callback) {
-    const bodyFormData = new FormData();
-    _.forIn(values, (value, key) => {
-        bodyFormData.set(key, value);
-    });
+    // const bodyFormData = new FormData();
+    // _.forIn(values, (value, key) => {
+    //     bodyFormData.set(key, value);
+    // });
 
-    const request = axios({
-        method: 'post',
-        url: `${ROOT_URL}municipalities/${id}`,
-        data: bodyFormData,
-        config: { headers: {'Content-Type': 'multipart/form-data' }}
-    }).then(() => callback());
+    const request = axios.put(`${ROOT_URL}municipalities/${id}`, values)
+        .then(() => callback());
 
     return {
         type: EDIT_MUNICIPALITY,

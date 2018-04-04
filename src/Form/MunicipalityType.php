@@ -8,6 +8,7 @@ use App\Entity\Municipality;
 use App\Entity\Province;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +23,7 @@ class MunicipalityType extends AbstractType
             ->add('isProvincialCapital')
             ->add('cadastralCode')
             ->add('legalPopulationAt2011')
-            ->add('licensePlateCode')
+            ->add('licensePlateCode', TextType::class)
             ->add('province', EntityType::class, [
                 'class' => Province::class
             ])
@@ -39,6 +40,7 @@ class MunicipalityType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Municipality::class,
+            'allow_extra_fields' => true
         ]);
     }
 }

@@ -24,7 +24,7 @@ class MunicipalitiesIndex extends Component {
     render() {
         return(
             <div>
-                <Table selectable={false} onCellClick={this.showMunicipality}>
+                <Table selectable={false}>
                     <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
                         <TableRow>
                             <TableHeaderColumn>Name</TableHeaderColumn>
@@ -39,15 +39,15 @@ class MunicipalitiesIndex extends Component {
                         {this.renderMunicipalities()}
                     </TableBody>
                 </Table>
-                <Toolbar>
-                    <ToolbarGroup firstChild={true}>
-                        <FlatButton label="<<" containerElement={<Link to="/"/>}/>
-                        <FlatButton label="<" containerElement={<Link to="/"/>}/>
-                        <span>Pag. 1</span>
-                        <FlatButton label=">" containerElement={<Link to="/"/>}/>
-                        <FlatButton label=">>" containerElement={<Link to="/"/>}/>
-                    </ToolbarGroup>
-                </Toolbar>
+                {/*<Toolbar>*/}
+                    {/*<ToolbarGroup firstChild={true}>*/}
+                        {/*<FlatButton label="<<" containerElement={<Link to="/"/>}/>*/}
+                        {/*<FlatButton label="<" containerElement={<Link to="/"/>}/>*/}
+                        {/*<span>Pag. 1</span>*/}
+                        {/*<FlatButton label=">" containerElement={<Link to="/"/>}/>*/}
+                        {/*<FlatButton label=">>" containerElement={<Link to="/"/>}/>*/}
+                    {/*</ToolbarGroup>*/}
+                {/*</Toolbar>*/}
             </div>
         )
     }
@@ -65,10 +65,6 @@ class MunicipalitiesIndex extends Component {
                 </TableRow>
             );
         });
-    }
-
-    showMunicipality(row, column) {
-        console.log('Show municipality', row, column);
     }
 }
 

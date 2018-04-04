@@ -30,6 +30,7 @@ class Municipality
      * @var string
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(min="2")
      */
     private $name;
 
@@ -76,6 +77,7 @@ class Municipality
      * @var string
      * @ORM\Column(type="string", length=4)
      * @Assert\NotBlank()
+     * @Assert\Length(min="4", max="4")
      */
     private $cadastralCode;
 
@@ -89,6 +91,7 @@ class Municipality
      * @var string
      * @ORM\Column(type="string", length=2)
      * @Assert\NotBlank()
+     * @Assert\Length(min="2", max="2")
      */
     private $licensePlateCode;
 
@@ -145,7 +148,7 @@ class Municipality
      * @param string $name
      * @return Municipality
      */
-    public function setName(string $name): ?Municipality
+    public function setName(string $name = ''): ?Municipality
     {
         $this->name = $name;
         return $this;
@@ -253,7 +256,7 @@ class Municipality
      * @param string $licensePlateCode
      * @return Municipality
      */
-    public function setLicensePlateCode(string $licensePlateCode): Municipality
+    public function setLicensePlateCode(string $licensePlateCode = ''): Municipality
     {
         $this->licensePlateCode = $licensePlateCode;
         return $this;

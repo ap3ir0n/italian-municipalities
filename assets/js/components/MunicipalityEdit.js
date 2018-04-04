@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, submit } from 'react-redux';
 import { editMunicipality, fetchMunicipality } from '../actions/municipalities';
 import { fetchProvinces } from '../actions/provinces';
 import { fetchGeographicalDivisions } from '../actions/geographicalDivisions';
@@ -10,10 +10,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
-
-const loadMunicipality = () => {
-    return fetchMunicipality(2);
-};
 
 const style = {
     margin: 12,
@@ -25,15 +21,24 @@ class InitializeFromStateForm extends React.Component  {
     }
 
     componentDidMount() {
-        this.props.loadMunicipality();
+        const { id } = this.props.match.params;
+        this.props.fetchMunicipality(id);
         this.props.fetchProvinces();
         this.props.fetchGeographicalDivisions();
     }
 
+    onSubmit(values) {
+        const { id } = this.props.match.params;
+        this.props.editMunicipality(id, values, () => {
+            this.props.history.push(`/municipalities/${id}`);
+        });
+    }
+
     render() {
-        const { handleSubmit, loadMunicipality, pristine, reset, submitting } = this.props;
+        const { handleSubmit, municipality } = this.props;
+        const cancelLink = '/municipalities' + (municipality !== undefined ? `/${municipality.id}` : '');
         return (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <div>
                     <div>
                         <Field
@@ -70,7 +75,7 @@ class InitializeFromStateForm extends React.Component  {
                     <div>
                         <Field
                             name="licensePlateCode"
-                            label="License PlateCode"
+                            label="License Plate Code"
                             component={this.renderTextField}
                         />
                     </div>
@@ -90,8 +95,8 @@ class InitializeFromStateForm extends React.Component  {
                     </div>
                 </div>
                 <div>
-                    <RaisedButton label="Cancel" style={style}/>
-                    <RaisedButton label="Submit" style={style} primary={true}/>
+                    <RaisedButton label="Cancel" style={style} containerElement={<Link to={cancelLink}/>}/>
+                    <RaisedButton type="submit" label="Submit" style={style} primary={true}/>
                 </div>
             </form>
         );
@@ -161,10 +166,10 @@ InitializeFromStateForm = reduxForm({
     form: 'initializeFromState',
 })(InitializeFromStateForm);
 
-const mapStateToProps = (state)  => {
-    const municipality = state.municipalities[2];
+const mapStateToProps = (state, ownProps)  => {
+    const municipality = state.municipalities[ownProps.match.params.id];
     let initialValues = state.initialValues;
-    if (initialValues == undefined && municipality != undefined) {
+    if (initialValues === undefined && municipality !== undefined) {
         initialValues = _.mapValues(municipality, value => {
             if (_.isObject(value)) {
                 return value.id;
@@ -173,6 +178,7 @@ const mapStateToProps = (state)  => {
         });
     }
     return {
+        municipality,
         initialValues,
         provinces: state.provinces,
         geographicalDivisions: state.geographicalDivisions
@@ -180,7 +186,7 @@ const mapStateToProps = (state)  => {
 };
 
 InitializeFromStateForm = connect(
-    mapStateToProps, { loadMunicipality, fetchProvinces, fetchGeographicalDivisions },
+    mapStateToProps, { editMunicipality, fetchMunicipality, fetchProvinces, fetchGeographicalDivisions },
 )(InitializeFromStateForm);
 
 export default InitializeFromStateForm;
