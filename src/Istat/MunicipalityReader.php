@@ -7,7 +7,7 @@
 namespace App\Istat;
 
 
-interface IstatMunicipalityReader
+interface MunicipalityReader
 {
-    public function read(): array;
+    public function readMunicipalities(): array;
 }

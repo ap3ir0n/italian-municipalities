@@ -13,5 +13,5 @@ interface MunicipalityRepository
 {
     public function findAll(): array;
 
-    public function findOneByCode(): ?Municipality;
+    public function findOneByCode($code): ?Municipality;
 }

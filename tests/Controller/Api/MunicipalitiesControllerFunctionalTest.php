@@ -237,7 +237,6 @@ class MunicipalitiesControllerFunctionalTest extends WebTestCase
             ['CONTENT_TYPE' => 'application/json'], json_encode($data));
 
         $response = $this->client->getResponse();
-        print_r($response->getContent());
 
         $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
         $this->assertEquals('application/json', $response->headers->get('Content-Type'));

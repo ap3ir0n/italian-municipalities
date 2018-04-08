@@ -15,7 +15,7 @@ const style = {
     margin: 12,
 };
 
-class InitializeFromStateForm extends React.Component  {
+class MunicipalityEdit extends React.Component  {
     constructor(props) {
         super(props)
     }
@@ -162,9 +162,9 @@ class InitializeFromStateForm extends React.Component  {
 
 }
 
-InitializeFromStateForm = reduxForm({
+MunicipalityEdit = reduxForm({
     form: 'initializeFromState',
-})(InitializeFromStateForm);
+})(MunicipalityEdit);
 
 const mapStateToProps = (state, ownProps)  => {
     const municipality = state.municipalities[ownProps.match.params.id];
@@ -185,8 +185,8 @@ const mapStateToProps = (state, ownProps)  => {
     }
 };
 
-InitializeFromStateForm = connect(
+MunicipalityEdit = connect(
     mapStateToProps, { editMunicipality, fetchMunicipality, fetchProvinces, fetchGeographicalDivisions },
-)(InitializeFromStateForm);
+)(MunicipalityEdit);
 
-export default InitializeFromStateForm;
+export default MunicipalityEdit;

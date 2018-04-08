@@ -44,6 +44,12 @@ class MetropolitanCity
     private $municipalities;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = true;
+
+    /**
      * MetropolitanCity constructor.
      * @param int $code
      * @param string $name
@@ -118,4 +124,30 @@ class MetropolitanCity
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return MetropolitanCity
+     */
+    public function setIsActive(bool $isActive): MetropolitanCity
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function __toString()
+    {
+        return "{$this->getName()} ({$this->getId()})";
+    }
 }

@@ -46,6 +46,12 @@ class Province
     private $isAbolished;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = true;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Municipality", mappedBy="province")
      * @Serializer\Exclude()
      */
@@ -137,6 +143,33 @@ class Province
     public function getMunicipalities()
     {
         return $this->municipalities;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return Province
+     */
+    public function setIsActive(bool $isActive): Province
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function __toString()
+    {
+        return "{$this->getName()} ({$this->getId()})";
     }
 
 }

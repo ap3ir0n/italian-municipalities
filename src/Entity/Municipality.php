@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Hateoas\Configuration\Annotation as Hateoas;
 use JMS\Serializer\Annotation as Serializer;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -75,9 +76,10 @@ class Municipality
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=4)
+     * @ORM\Column(type="string", length=4, unique=true)
      * @Assert\NotBlank()
      * @Assert\Length(min="4", max="4")
+     *
      */
     private $cadastralCode;
 
@@ -94,6 +96,12 @@ class Municipality
      * @Assert\Length(min="2", max="2")
      */
     private $licensePlateCode;
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = true;
 
     public function getId()
     {
@@ -265,16 +273,16 @@ class Municipality
     /**
      * @return Province
      */
-    public function getMetropolitanCity(): ?Province
+    public function getMetropolitanCity(): ?MetropolitanCity
     {
         return $this->metropolitanCity;
     }
 
     /**
-     * @param Province $metropolitanCity
+     * @param MetropolitanCity $metropolitanCity
      * @return Municipality
      */
-    public function setMetropolitanCity(Province $metropolitanCity): Municipality
+    public function setMetropolitanCity(MetropolitanCity $metropolitanCity): Municipality
     {
         $this->metropolitanCity = $metropolitanCity;
         return $this;
@@ -293,4 +301,30 @@ class Municipality
         return $code;
     }
 
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return Municipality
+     */
+    public function setIsActive(bool $isActive): Municipality
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function __toString()
+    {
+        return "{$this->getName()} ({$this->getId()})";
+    }
 }

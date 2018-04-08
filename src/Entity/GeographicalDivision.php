@@ -38,8 +38,15 @@ class GeographicalDivision
      */
     private $municipalities;
 
-    public function __construct()
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive = true;
+
+    public function __construct(string $name = '')
     {
+        $this->name = $name;
         $this->municipalities = new ArrayCollection();
     }
 
@@ -72,6 +79,33 @@ class GeographicalDivision
     public function getMunicipalities()
     {
         return $this->municipalities;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return GeographicalDivision
+     */
+    public function setIsActive(bool $isActive): GeographicalDivision
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
+    }
+
+    public function __toString()
+    {
+        return "{$this->getName()} ({$this->getId()})";
     }
 
 }
